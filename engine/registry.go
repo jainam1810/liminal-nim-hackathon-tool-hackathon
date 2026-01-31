@@ -61,12 +61,24 @@ func (r *ToolRegistry) ToAPITools() []anthropic.ToolUnionParam {
 
 	tools := make([]anthropic.ToolUnionParam, 0, len(r.tools))
 	for _, tool := range r.tools {
+		schema := tool.Schema()
+		properties, _ := schema["properties"].(map[string]interface{})
+		required := []string{}
+		if reqField, ok := schema["required"].([]interface{}); ok {
+			for _, r := range reqField {
+				if str, ok := r.(string); ok {
+					required = append(required, str)
+				}
+			}
+		}
+
 		tools = append(tools, anthropic.ToolUnionParam{
 			OfTool: &anthropic.ToolParam{
 				Name:        tool.Name(),
 				Description: anthropic.String(tool.Description()),
 				InputSchema: anthropic.ToolInputSchemaParam{
-					Properties: tool.Schema(),
+					Properties: properties,
+					Required:   required,
 				},
 			},
 		})
@@ -82,12 +94,24 @@ func (r *ToolRegistry) ToAPIToolsFiltered(filter func(core.Tool) bool) []anthrop
 	var tools []anthropic.ToolUnionParam
 	for _, tool := range r.tools {
 		if filter(tool) {
+			schema := tool.Schema()
+			properties, _ := schema["properties"].(map[string]interface{})
+			required := []string{}
+			if reqField, ok := schema["required"].([]interface{}); ok {
+				for _, r := range reqField {
+					if str, ok := r.(string); ok {
+						required = append(required, str)
+					}
+				}
+			}
+
 			tools = append(tools, anthropic.ToolUnionParam{
 				OfTool: &anthropic.ToolParam{
 					Name:        tool.Name(),
 					Description: anthropic.String(tool.Description()),
 					InputSchema: anthropic.ToolInputSchemaParam{
-						Properties: tool.Schema(),
+						Properties: properties,
+						Required:   required,
 					},
 				},
 			})

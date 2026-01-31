@@ -2,6 +2,38 @@
 
 A Go SDK for building AI-powered financial assistants using Claude.
 
+---
+
+## 💜 For Hackathon Participants
+
+**Building for the Liminal Vibe Banking Hackathon?** Start here:
+
+👉 **[Hackathon Starter Guide](./examples/hackathon-starter/)** — Get up and running in 5 minutes with a complete AI banking agent.
+
+**What you get:**
+- ✅ Complete backend with all 9 Liminal banking tools
+- ✅ Beautiful React chat interface with nim-chat widget
+- ✅ Example custom tool (spending analyzer) to learn from
+- ✅ Step-by-step guide for getting API keys via TestFlight
+- ✅ Ready-to-customize system prompt and AI personality
+
+**Quick start:**
+```bash
+cd examples/hackathon-starter
+cp .env.example .env
+# Add your API keys to .env
+go run main.go
+```
+
+Then in another terminal:
+```bash
+cd frontend && npm install && npm run dev
+```
+
+See the [Hackathon Starter README](./examples/hackathon-starter/README.md) for complete instructions, project ideas, and tips!
+
+---
+
 ## Features
 
 - **Ready-to-run WebSocket server** - Handles all WebSocket/streaming complexity
@@ -201,6 +233,7 @@ Available Liminal tools:
 
 See the `examples/` directory:
 
+- **`hackathon-starter/`** - Complete starter for the Liminal Vibe Banking Hackathon (recommended!)
 - `basic/` - Simple server with one custom tool
 - `custom-tools/` - Multiple custom tools (task manager)
 - `full-agent/` - Full agent with Liminal integration
@@ -208,8 +241,9 @@ See the `examples/` directory:
 ## Environment Variables
 
 - `ANTHROPIC_API_KEY` - Required. Your Anthropic API key.
-- `LIMINAL_API_KEY` - Optional. Liminal API key for financial tools.
 - `LIMINAL_BASE_URL` - Optional. Liminal API URL (default: https://api.liminal.cash)
+
+Note: Liminal authentication is automatic via JWT tokens from the login flow. No API key needed.
 
 ## License
 

@@ -22,40 +22,33 @@ func main() {
 		log.Fatal("ANTHROPIC_API_KEY environment variable is required")
 	}
 
-	liminalAPIKey := os.Getenv("LIMINAL_API_KEY")
 	liminalBaseURL := os.Getenv("LIMINAL_BASE_URL")
 	if liminalBaseURL == "" {
 		liminalBaseURL = "https://api.liminal.cash"
 	}
 
 	// Create HTTP executor for Liminal tools
-	var liminalExecutor core.ToolExecutor
-	if liminalAPIKey != "" {
-		liminalExecutor = executor.NewHTTPExecutor(executor.HTTPExecutorConfig{
-			BaseURL: liminalBaseURL,
-			APIKey:  liminalAPIKey,
-		})
-		log.Println("Liminal API configured")
-	} else {
-		log.Println("Warning: LIMINAL_API_KEY not set, Liminal tools will not be available")
-	}
+	// Authentication is automatic via JWT tokens from login flow
+	liminalExecutor := executor.NewHTTPExecutor(executor.HTTPExecutorConfig{
+		BaseURL: liminalBaseURL,
+	})
+	log.Println("Liminal API configured")
 
 	// Create server with authentication
 	srv, err := server.New(server.Config{
-		AnthropicKey: anthropicKey,
-		SystemPrompt: nimSystemPrompt,
-		Model:        "claude-sonnet-4-20250514",
-		MaxTokens:    4096,
-		AuthFunc:     authenticateRequest,
+		AnthropicKey:    anthropicKey,
+		SystemPrompt:    nimSystemPrompt,
+		Model:           "claude-sonnet-4-20250514",
+		MaxTokens:       4096,
+		LiminalExecutor: liminalExecutor, // SDK extracts JWT and forwards to Liminal
+		AuthFunc:        authenticateRequest,
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Add Liminal tools if executor is configured
-	if liminalExecutor != nil {
-		srv.AddTools(tools.LiminalTools(liminalExecutor)...)
-	}
+	// Add Liminal tools
+	srv.AddTools(tools.LiminalTools(liminalExecutor)...)
 
 	// Add custom tools
 	srv.AddTool(createThinkTool())

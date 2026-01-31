@@ -15,6 +15,7 @@ import (
 
 	"github.com/becomeliminal/nim-go-sdk/core"
 	"github.com/becomeliminal/nim-go-sdk/engine"
+	"github.com/becomeliminal/nim-go-sdk/executor"
 	"github.com/becomeliminal/nim-go-sdk/store"
 )
 
@@ -37,8 +38,14 @@ type Config struct {
 	// MaxTokens is the maximum response tokens.
 	MaxTokens int64
 
+	// LiminalExecutor is the executor for Liminal API calls.
+	// If provided, the server will automatically extract JWT tokens from requests
+	// and forward them to the executor for authenticated API calls.
+	LiminalExecutor *executor.HTTPExecutor
+
 	// AuthFunc validates requests and returns a user ID.
-	// If nil, a default user ID is used (not recommended for production).
+	// If nil, a default handler is used that extracts JWT tokens for Liminal authentication.
+	// Most users should leave this nil.
 	AuthFunc func(r *http.Request) (userID string, err error)
 
 	// Conversations persists conversations.
@@ -179,12 +186,42 @@ func (s *Server) Run(addr string) error {
 	return http.ListenAndServe(addr, nil)
 }
 
+// defaultLiminalAuthFunc returns a default authentication function for Liminal.
+// It extracts JWT tokens from requests and forwards them to the HTTPExecutor.
+func (s *Server) defaultLiminalAuthFunc() func(r *http.Request) (string, error) {
+	return func(r *http.Request) (string, error) {
+		// Extract JWT from query param (WebSocket) or Authorization header
+		jwt := r.URL.Query().Get("token")
+		if jwt == "" {
+			auth := r.Header.Get("Authorization")
+			if len(auth) > 7 && auth[:7] == "Bearer " {
+				jwt = auth[7:]
+			}
+		}
+
+		// Forward JWT to HTTPExecutor for API calls
+		if jwt != "" && s.config.LiminalExecutor != nil {
+			s.config.LiminalExecutor.UpdateJWT(jwt)
+		}
+
+		// Return placeholder user ID (gateway extracts real user from JWT)
+		return "user", nil
+	}
+}
+
 func (s *Server) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	// Authenticate
 	userID := "default-user"
-	if s.config.AuthFunc != nil {
+	authFunc := s.config.AuthFunc
+
+	// Use default Liminal JWT handler if no custom auth provided
+	if authFunc == nil && s.config.LiminalExecutor != nil {
+		authFunc = s.defaultLiminalAuthFunc()
+	}
+
+	if authFunc != nil {
 		var err error
-		userID, err = s.config.AuthFunc(r)
+		userID, err = authFunc(r)
 		if err != nil {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
