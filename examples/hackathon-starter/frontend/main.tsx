@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { NimChat } from '@becomeliminal/nim-chat'
-import '@becomeliminal/nim-chat/styles.css'
+import { NimChat } from '@liminalcash/nim-chat'
+import '@liminalcash/nim-chat/styles.css'
 import './styles.css'
 
 function App() {
