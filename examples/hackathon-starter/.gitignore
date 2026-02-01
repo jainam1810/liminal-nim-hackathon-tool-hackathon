@@ -36,3 +36,8 @@ frontend/.vite/
 Thumbs.db
 .env
 .env.example
+
+# Local State & Logs
+blockchain.json
+main_debug.txt
+
