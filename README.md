@@ -7,7 +7,7 @@ A Go SDK for building AI-powered financial assistants using Claude.
 # Checkout our tool for Detecting Suspicious Transaction for Liminal - 
 https://drive.google.com/file/d/1KvJ2GQn74eZPzK1ZJr6XbAjoyAwrSWVS/view?usp=sharing
 
-## 💜 For Hackathon Participants
+## For Hackathon Participants
 
 **Building for the Liminal Vibe Banking Hackathon?** Start here:
 
