@@ -11,7 +11,7 @@ https://drive.google.com/file/d/1KvJ2GQn74eZPzK1ZJr6XbAjoyAwrSWVS/view?usp=shari
 
 **Building for the Liminal Vibe Banking Hackathon?** Start here:
 
-👉 **[Hackathon Starter Guide](./examples/hackathon-starter/)** — Get up and running in 5 minutes with a complete AI banking agent.
+**[Hackathon Starter Guide](./examples/hackathon-starter/)** — Get up and running in 5 minutes with a complete AI banking agent.
 
 **What you get:**
 - ✅ Complete backend with all 9 Liminal banking tools
