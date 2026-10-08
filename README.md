@@ -1,4 +1,4 @@
-# Suspicious Transaction Detector (Liminal Vibe Banking Hackathon)
+# Suspicious Transaction Detector (Liminal Banking Hackathon)
 
 A Go tool built on the Nim Go SDK that uses Claude to flag anomalous payment patterns and streams transaction context over WebSockets for real-time review.
 
