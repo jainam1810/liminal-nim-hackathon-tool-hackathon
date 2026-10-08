@@ -1,11 +1,20 @@
+# Suspicious Transaction Detector (Liminal Vibe Banking Hackathon)
+
+A Go tool built on the Nim Go SDK that uses Claude to flag anomalous payment patterns and streams transaction context over WebSockets for real-time review.
+
+- The agent recommends but never executes: every flagged action needs human approval before any write.
+- Each decision is recorded in an append-only ledger.
+- Tool overview: https://drive.google.com/file/d/1KvJ2GQn74eZPzK1ZJr6XbAjoyAwrSWVS/view?usp=sharing
+
+The Nim Go SDK documentation follows below.
+
+---
+
 # Nim Go SDK
 
 A Go SDK for building AI-powered financial assistants using Claude.
 
 ---
-
-# Checkout our tool for Detecting Suspicious Transaction for Liminal - 
-https://drive.google.com/file/d/1KvJ2GQn74eZPzK1ZJr6XbAjoyAwrSWVS/view?usp=sharing
 
 ## For Hackathon Participants
 
