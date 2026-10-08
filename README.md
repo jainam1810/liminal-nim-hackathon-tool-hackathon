@@ -14,11 +14,11 @@ https://drive.google.com/file/d/1KvJ2GQn74eZPzK1ZJr6XbAjoyAwrSWVS/view?usp=shari
 **[Hackathon Starter Guide](./examples/hackathon-starter/)** — Get up and running in 5 minutes with a complete AI banking agent.
 
 **What you get:**
-- ✅ Complete backend with all 9 Liminal banking tools
-- ✅ Beautiful React chat interface with nim-chat widget
-- ✅ Example custom tool (spending analyzer) to learn from
-- ✅ Step-by-step guide for getting API keys via TestFlight
-- ✅ Ready-to-customize system prompt and AI personality
+- Complete backend with all 9 Liminal banking tools
+- Beautiful React chat interface with nim-chat widget
+- Example custom tool (spending analyzer) to learn from
+- Step-by-step guide for getting API keys via TestFlight
+- Ready-to-customize system prompt and AI personality
 
 **Quick start:**
 ```bash
