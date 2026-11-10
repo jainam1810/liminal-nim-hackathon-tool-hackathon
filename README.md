@@ -6,7 +6,7 @@ A Go tool built on the Nim Go SDK that uses Claude to flag anomalous payment pat
 - Each decision is recorded in an append-only ledger.
 - Tool overview: https://drive.google.com/file/d/1KvJ2GQn74eZPzK1ZJr6XbAjoyAwrSWVS/view?usp=sharing
 
-The Nim Go SDK documentation follows below.
+The Nim Go SDK documentation follows below: -
 
 ---
 
